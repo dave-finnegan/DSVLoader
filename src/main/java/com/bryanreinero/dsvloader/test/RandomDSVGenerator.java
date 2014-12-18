@@ -63,6 +63,16 @@ public class RandomDSVGenerator {
 	public void execute() {
 		Random rand = new Random();
 		
+        // Write header line
+        try {
+            bw.write(",:_id:objectid,count:float,sum:float,name:string\n");
+            bw.flush();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.exit( -1 );
+        }
+
 		for( int i = 0; i < totalLines; i++ ) {
 			
 			StringBuffer buf = new StringBuffer( (new ObjectId()).toString() );

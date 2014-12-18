@@ -1,6 +1,6 @@
 package com.bryanreinero.dsvloader;
 
-import com.bryanreinero.firehose.Firehose;
+//import com.bryanreinero.firehose.Firehose;
 import com.bryanreinero.firehose.Converter;
 import com.bryanreinero.firehose.Transformer;
 import com.bryanreinero.firehose.cli.CallBack;
@@ -41,6 +41,7 @@ public class DSVLoader implements Executor {
 		
 		Map<String, CallBack> myCallBacks = new HashMap<String, CallBack>();
 		
+        /* dmf: parse header from first line of file
 		// custom command line callback for csv conversion
 		myCallBacks.put("h", new CallBack() {
 			@Override
@@ -59,6 +60,7 @@ public class DSVLoader implements Executor {
 				converter.setDelimiter( values[0].charAt(0) );
 			}
 		});
+        */
 
 		// custom command line callback for delimeter
 		myCallBacks.put("f", new CallBack() {
@@ -67,6 +69,18 @@ public class DSVLoader implements Executor {
 				filename  = values[0];
 				try { 
 					br = new BufferedReader(new FileReader(filename));
+
+                    // read header line from file
+                    String ln = br.readLine();
+                    String colDelim = ln.substring(0,1);
+                    String fieldDelim = ln.substring(1,2);
+                    String header = ln.substring(2);
+                    converter.setDelimiter( colDelim.charAt(0) );
+                    for (String column : header.split(colDelim)) {
+                    String[] s = column.split(fieldDelim);
+                    converter.addField(s[0], Transformer.getTransformer(s[1]));
+                    }
+                
 				}catch (Exception e) {
                     System.out.println("Caught exception in file handler:"
                                        +e.getMessage());

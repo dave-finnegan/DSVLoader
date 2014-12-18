@@ -10,22 +10,6 @@
                 "args" : 1
             },
             {
-                "op": "h",
-                "longOpt" : "headers",
-                "name": "name:type",
-                "description": "',' delimited list of columns",
-                "required": "true",
-                "args": "multi",
-                "separator": ","
-            },
-            {
-                "op": "d",
-                "longOpt" : "delimiter",
-                "name": "delimeter",
-                "description": "the value separator used to parse columns. Default ','",
-                "args": 1
-            },
-            {
                 "op": "v",
                 "longOpt" : "verbose",
                 "name": "verbose",
